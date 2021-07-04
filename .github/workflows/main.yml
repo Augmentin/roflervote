@@ -1,0 +1,39 @@
+name: CICD
+
+on:
+  push:
+    branches: [ main ]
+
+
+jobs:
+  test:
+    runs-on: prod
+    
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v2
+      - name: Unit tests
+        run: |
+          cp .env.example .env
+          composer install
+          php artisan key:generate
+          vendor/bin/phpunit
+
+  deploy:
+    runs-on: prod
+    needs: test
+    steps:
+      - name: Deplying script into production enviroment
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.PRODUCTION_PRIVATE_KEY}}
+          CI_COMMIT_SHA: ${{github.sha}}
+          CI_PROJECT_PATH: ${{github.repository}}
+          CI_SERVER_HOST: github.com
+          PRODUCTION: ${{secrets.PRODUCTION_HOST}}
+          APP_DIR: ${{secrets.APP_DIR}}
+        run: |
+          eval `ssh-agent -s`
+          ssh-add <(echo "$SSH_PRIVATE_KEY")
+          mkdir -p ~/.ssh
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA" --repository="git@$CI_SERVER_HOST:/$CI_PROJECT_PATH.git" --production="deployer@$PRODUCTION" --appdir="$APP_DIR"
