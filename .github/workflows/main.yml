@@ -24,6 +24,8 @@ jobs:
     needs: test
     steps:
       - name: Deplying script into production enviroment
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.PRODUCTION_PRIVATE_KEY}}
         run: |
           eval `ssh-agent -s`
           ssh-add <(echo "$SSH_PRIVATE_KEY")
