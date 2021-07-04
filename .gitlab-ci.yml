@@ -1,0 +1,33 @@
+stages:
+  - test
+  - deploy
+
+cache:
+  paths:
+    - vendor/
+
+unit_test:
+  stage: test
+  tags:
+    - prod
+  script:
+    - cp .env.example .env
+    - composer install
+    - php artisan key:generate
+    - vendor/bin/phpunit
+
+deploy_production:
+  stage: deploy
+  tags:
+    - prod
+  script:
+    - eval `ssh-agent -s`
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA" --repository="git@$CI_SERVER_HOST:/$CI_PROJECT_PATH.git" --production="deployer@$PRODUCTION" --phpfpm="$PHPFPM" --appdir="$APP_DIR"
+  environment:
+    name: production
+    url: https://rofler-club.ru
+  only:
+    - master
