@@ -10,6 +10,8 @@ jobs:
     runs-on: prod
     
     steps:
+      - name: Clone project
+        uses: actions/checkout@v2
       - name: Unit tests
         run: |
           cp .env.example .env
