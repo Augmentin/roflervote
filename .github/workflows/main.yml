@@ -19,7 +19,7 @@ jobs:
 
   deploy:
     runs-on: prod
-    
+    needs: test
     steps:
       - name: Deplying script into production enviroment
         run: |
