@@ -11,8 +11,28 @@
     },
     "devDependencies": {
         "axios": "^0.21",
+        "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "popper.js": "^1.16.1",
+        "postcss": "^8.1.14",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "^1.44.0",
+        "vue-loader": "^17.0.0",
+        "vue-template-compiler": "^2.6.14"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.0",
+        "bootstrap": "^5.1.3",
+        "es6-promise": "^4.2.8",
+        "font-awesome": "^4.7.0",
+        "moment": "^2.29.1",
+        "pretty-bytes": "^5.6.0",
+        "sass-loader": "^12.4.0",
+        "vue": "^3.2.26",
+        "vue-router": "^4.0.12",
+        "vue3-popper": "^1.4.1",
+        "vuex": "^4.0.2",
+        "youtube-player": "^5.5.2"
     }
 }
