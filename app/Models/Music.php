@@ -13,7 +13,7 @@ class Music extends Model
      *
      * @var string
      */
-    protected $connection = 'sqlite';
+    protected $connection = 'mysql';
     /**
      * The table associated with the model.
      *

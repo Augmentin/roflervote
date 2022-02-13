@@ -8,7 +8,7 @@ class BetweenTwo extends \App\Http\Controllers\Controller
         $count = $request->get("count");
         $count = (int)$count;
         $collection = $request->get("collection");
-        $collectionCount =
+        $collectionCount = "";
         if($count > 64 ){
             $count = 64;
         }
