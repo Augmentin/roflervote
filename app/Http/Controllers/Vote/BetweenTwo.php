@@ -1,19 +1,26 @@
 <?php
-
+namespace App\Http\Controllers\Vote;
 use Illuminate\Http\Request;
 
 class BetweenTwo extends \App\Http\Controllers\Controller
 {
     public function getList(Request $request ){
-        $count = $request->get("count");
-        $count = (int)$count;
+        $limit = $request->get("limit");
+        $limit = (int)$limit;
         $collection = $request->get("collection");
-        $collectionCount = "";
-        if($count > 64 ){
-            $count = 64;
+        if(is_null($collection)){
+            $collection = config('music.default.collection');
         }
-        if($count < 8){
-            $count = 8;
+
+        if($limit < config('music.default.limit')){
+            $limit = config('music.default.limit');
         }
+        /** @var Illuminate\Database\Eloquent\Builder $music */
+        $music = \App\Models\Music::where("collection" ,$collection);
+
+        $music = $music->limit($limit)->inRandomOrder()->get();
+        return response()->json([
+           "data" => $music,
+        ]);
     }
 }
