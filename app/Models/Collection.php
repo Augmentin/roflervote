@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Collections extends Model
+class Collection extends Model
 {
     use HasFactory;
     /**
@@ -21,4 +21,14 @@ class Collections extends Model
      * @var string
      */
     protected $table = 'collections';
+
+    /**
+     * Get all music
+     */
+    public function getSongs()
+    {
+        return $this->hasManyThrough(Music::class, MusicCollectionRelations::class,
+        'collection' , 'id', 'id' , 'music'
+        );
+    }
 }

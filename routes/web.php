@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/list', [\App\Http\Controllers\Vote\BetweenTwo::class , "getList"]);
 Route::prefix("/kek/")->group(
     function (){
-        Route::get('/betweenTwo/list', [\App\Http\Controllers\Vote\BetweenTwo::class , "getList"]);
+        Route::get('/collection/{id}', [\App\Http\Controllers\Vote\Collection::class , "getMusic"]);
     }
 );
 Route::get('/', function () {
