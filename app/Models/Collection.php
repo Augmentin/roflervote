@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 class Collection extends Model
 {
@@ -31,4 +32,23 @@ class Collection extends Model
         'collection' , 'id', 'id' , 'music'
         );
     }
+
+    public function image(){
+        return $this->hasOne(CollectionsImage::class , "id" , "image");
+    }
+
+    /**
+     * @return Builder
+     */
+    public static function getPubicCollections(){
+        return \App\Models\Collection::withImage()->where("isPublic" , true);
+    }
+
+    /**
+     * @return Builder
+     */
+    public static function withImage(){
+        return \App\Models\Collection::select(['collections.*' ,  'images_collections.id as image_id', 'images_collections.name as image_name'])->leftJoin('images_collections', 'images_collections.id' , '=' , 'collections.image' );
+    }
+
 }

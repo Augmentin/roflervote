@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMusicTable extends Migration
+class CreateImagesCollectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateMusicTable extends Migration
      */
     public function up()
     {
-        Schema::create('music', function (Blueprint $table) {
+        Schema::create('images_collections', function (Blueprint $table) {
             $table->id();
-            $table->string("youtubeId")->unique();
-            $table->string("type");
-            $table->string("name");
-            $table->bigInteger("viewCount")->unsigned();
+            $table->bigInteger("collections")->unsigned();
+            $table->binary('image');
+            $table->string('name');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateMusicTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('music');
+        Schema::dropIfExists('images_collections');
     }
 }

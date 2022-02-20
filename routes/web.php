@@ -16,9 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::prefix("/kek/")->group(
     function (){
         Route::get('/collection/{id}', [\App\Http\Controllers\Vote\Collection::class , "getMusic"]);
+
+
+
+
+        Route::post('/collection/image/', [\App\Http\Controllers\Vote\Collection::class , "postImage"]);
+        Route::get('/collection/image/{id}', [\App\Http\Controllers\Vote\Collection::class , "getImage"]);
     }
 );
-Route::get('/', function () {
-    return view('layouts.select');
-});
+
+
+Route::get('/', [\App\Http\Controllers\Vote\Collection::class , "getMainView"]);
 

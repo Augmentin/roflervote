@@ -18,7 +18,8 @@ class CreateCollectionsTable extends Migration
             $table->string("name");
             $table->integer("priority")->index();
             $table->integer("user");
-
+            $table->boolean("isPublic")->autoIncrement(true);
+            $table->bigInteger("viewCount")->unsigned();
         });
     }
 
